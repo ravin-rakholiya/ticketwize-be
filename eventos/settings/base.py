@@ -60,6 +60,7 @@ DJANGO_APPS = (
 
 THIRD_PARTY_APPS = (
     'rest_framework',
+    'ckeditor',
     # 'rest_framework.authtoken',
     # 'django.contrib.sites',
     # 'drf_yasg',
@@ -69,6 +70,9 @@ THIRD_PARTY_APPS = (
 
 LOCAL_APPS = (
     'event',
+    'payment',
+    'user',
+    'content'
 )
 
 
