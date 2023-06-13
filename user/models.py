@@ -70,9 +70,8 @@ class User(AbstractBaseUser):
 			return value
 	first_name = models.CharField(max_length=128, unique=False, blank=True, null=True, )
 	last_name = models.CharField(max_length=128, unique=False, blank=True, null=True, )
-	email = models.EmailField(blank=True, null=True, db_index=True, unique = False)
+	email = models.EmailField(blank=True, null=True, db_index=True, unique = True)
 	contact_number = models.CharField(validators=[validate_contact_number],max_length=16, blank=True, null=True, db_index=True)
-	phone_code = models.CharField(max_length=16, blank=True, null=True)
 	dob = models.DateField(blank=True, null=True, )
 	gender = models.CharField(max_length=1,choices=GENDER_CHOICES, blank=True, null=True)
 	is_active = models.BooleanField(default=True)
@@ -124,7 +123,7 @@ class Address(models.Model):
 class UserEvent(models.Model):
 	user = models.ForeignKey(User, null=False, blank=False, on_delete=models.PROTECT)
 	event = models.ForeignKey(Event, null=False, blank=False, on_delete=models.PROTECT)
-	no_of_seats = models.IntegerField(blank=False, null=False, default = 0)
+	no_of_tickets = models.IntegerField(blank=False, null=False, default = 0)
 	created_at = models.DateTimeField(auto_now_add=True, editable=False, null=False, blank=False)
 	updated_at = models.DateTimeField(auto_now=True, null=False, blank=False)
 	

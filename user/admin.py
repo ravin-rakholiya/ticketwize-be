@@ -65,10 +65,10 @@ class UserAdmin(BaseUserAdmin):
 	# These override the definitions on the base UserAdmin
 	# that reference specific fields on auth.User.
 	list_display = (
-	'id', 'first_name', 'last_name', 'email', 'contact_number', 'phone_code', 'is_admin', 'is_active', 'created_at', 'updated_at')
+	'id', 'first_name', 'last_name', 'email', 'contact_number', 'is_admin', 'is_active', 'created_at', 'updated_at')
 	list_filter = ('is_admin',)
 	fieldsets = (
-		(None, {'fields': ('first_name', 'last_name', 'email', 'contact_number', 'phone_code','password')}),
+		(None, {'fields': ('first_name', 'last_name', 'email', 'contact_number','password')}),
 		('Additional Info', {'fields': ('dob', 'gender', 'user_type')}),
 		('Permissions', {'fields': ('is_staff', 'is_admin','is_active')}),
 	)
@@ -104,8 +104,8 @@ admin.site.register(Address, AddressAdmin)
 
 class UserEventAdmin(admin.ModelAdmin):
     """ Registering the UserEvent to Django Admin Panel """
-    fields = ['user', 'event', 'no_of_seats']
-    list_display = ('id', 'user', 'event', 'no_of_seats', 'created_at', 'updated_at',)
+    fields = ['user', 'event', 'no_of_tickets']
+    list_display = ('id', 'user', 'event', 'no_of_tickets', 'created_at', 'updated_at',)
     list_per_page = 25
 
 admin.site.register(UserEvent, UserEventAdmin)

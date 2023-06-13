@@ -22,6 +22,5 @@ class EventContent(models.Model):
 	content = models.FileField(upload_to=content_upload_path)
 	extention = models.CharField(max_length=50, blank=True, null=True)
 	duration = models.CharField(max_length=10, blank=True, null=True)
-	offline_locator=models.CharField(max_length=20, blank=True, null=True)
 	created_at = models.DateTimeField(auto_now_add=True, editable=False, null=False, blank=False)
 	updated_at = models.DateTimeField(auto_now=True, null=False, blank=False)
