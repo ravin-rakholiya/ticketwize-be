@@ -61,6 +61,7 @@ DJANGO_APPS = (
 THIRD_PARTY_APPS = (
     'rest_framework',
     'ckeditor',
+    'corsheaders',
     # 'rest_framework.authtoken',
     # 'django.contrib.sites',
     # 'drf_yasg',
@@ -81,6 +82,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -90,6 +92,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'eventos.urls'
+
+CORS_ALLOW_ALL_ORIGINS = True # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOWED_ORIGINS = ['http://localhost:8000']
 
 TEMPLATES = [
     {
@@ -198,5 +205,6 @@ STATICFILES_DIRS = (str(APPS_DIR.path('static')),
 
 )
 STATIC_URL = '/static/'
+print(f"208------", str(ROOT_DIR.path('media')))
 MEDIA_ROOT  = str(ROOT_DIR.path('media'))
 MEDIA_URL = '/media/'
