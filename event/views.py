@@ -29,15 +29,15 @@ class RegisterEventAPIView(APIView):
 	serializer_classes = []
 
 	def post(self, request):
-		event_id = request.data.get('event_id', None)
-		no_of_tickets = request.data.get('no_of_tickets', None)
-		first_name = request.data.get('first_name', None)
-		last_name = request.data.get('last_name', None)
-		email = request.data.get('email', None)
-		contact_number = request.data.get('contact_number', None)
-		dob = datetime.strptime(request.data.get('dob', None), '%Y-%m-%d')
-		gender = request.data.get('gender', None)
-
+		event_id = request.data.get('event_id', "f34ccf99-8963-476b-90f5-8d81b6963a4d")
+		no_of_tickets = request.data.get('no_of_tickets', '2')
+		first_name = request.data.get('first_name', "Ravin")
+		last_name = request.data.get('last_name', "Rakholiya")
+		email = request.data.get('email', "ravinkumarrakh@gmail.co ")
+		contact_number = request.data.get('contact_number', "5199914007")
+		dob = datetime.strptime(request.data.get('dob', "1998-06-22"), '%Y-%m-%d')
+		gender = request.data.get('gender', "M")
+		print(f"40------", event_id)
 		if event_id is not None:
 			event = Event.objects.filter(event_id = event_id, is_active = True)
 			if event:
@@ -59,7 +59,6 @@ class RegisterEventAPIView(APIView):
 					# write a code for payment gateway after creating user event and before adding booked seat
 					checkout_session = checkout_payment(user_event)
 					return redirect(checkout_session.url, code=303)
-					# return Response({"response": "tickets confirmation is in progress."}, status = status.HTTP_200_OK)
 				else:
 					return Response({"response":"reuqired seats are not available."},  status=status.HTTP_400_BAD_REQUEST)
 		return Response({"response":"provide valid event id."},  status=status.HTTP_400_BAD_REQUEST)
