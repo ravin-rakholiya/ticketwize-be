@@ -4,6 +4,8 @@ from rest_framework.views import APIView
 from event.serializers import *
 from datetime import datetime
 from user.models import User, UserEvent
+from payment.scripts import *
+from django.shortcuts import redirect
 
 # Create your views here.
 class FetchEventAPIView(APIView):
@@ -55,9 +57,9 @@ class RegisterEventAPIView(APIView):
 				if int(event.total_seat) - int(event.booked_seat) >= int(no_of_tickets):
 					user_event = UserEvent.objects.create(user = user, event = event, no_of_tickets = int(no_of_tickets))
 					# write a code for payment gateway after creating user event and before adding booked seat
-					event.booked_seat += int(no_of_tickets)
-					event.save()
-					return Response({"response": "tickets confirmed successfully."}, status = status.HTTP_200_OK)
+					checkout_session_id = checkout_payment(user_event)
+					return redirect(checkout_session.url, code=303)
+					# return Response({"response": "tickets confirmation is in progress."}, status = status.HTTP_200_OK)
 				else:
 					return Response({"response":"reuqired seats are not available."},  status=status.HTTP_400_BAD_REQUEST)
 		return Response({"response":"provide valid event id."},  status=status.HTTP_400_BAD_REQUEST)

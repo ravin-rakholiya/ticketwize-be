@@ -96,7 +96,7 @@ ROOT_URLCONF = 'eventos.urls'
 CORS_ALLOW_ALL_ORIGINS = True # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
 CORS_ALLOW_CREDENTIALS = True
 
-CORS_ALLOWED_ORIGINS = ['http://localhost:8000']
+CORS_ALLOWED_ORIGINS = ['http://localhost:8000',]
 
 TEMPLATES = [
     {
@@ -205,6 +205,8 @@ STATICFILES_DIRS = (str(APPS_DIR.path('static')),
 
 )
 STATIC_URL = '/static/'
-print(f"208------", str(ROOT_DIR.path('media')))
 MEDIA_ROOT  = str(ROOT_DIR.path('media'))
 MEDIA_URL = '/media/'
+
+STRIPE_SECRET_KEY=env('STRIPE_SECRET_KEY')
+SITE_URL = env('SITE_URL')

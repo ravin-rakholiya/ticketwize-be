@@ -4,5 +4,6 @@ from payment import views
 
 
 urlpatterns = [
-    # path('', views.FetchEvents.as_view(), name='fetch-event-data'),
+    path('fetch/payment_config', views.FetchPaymentConfig.as_view(), name='fetch-payment-config'),
+    # path('checkout', views.CheckoutPayment.as_view(), name='checkout-payment'),
 ]
