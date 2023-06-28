@@ -57,7 +57,7 @@ class RegisterEventAPIView(APIView):
 				if int(event.total_seat) - int(event.booked_seat) >= int(no_of_tickets):
 					user_event = UserEvent.objects.create(user = user, event = event, no_of_tickets = int(no_of_tickets))
 					# write a code for payment gateway after creating user event and before adding booked seat
-					checkout_session_id = checkout_payment(user_event)
+					checkout_session = checkout_payment(user_event)
 					return redirect(checkout_session.url, code=303)
 					# return Response({"response": "tickets confirmation is in progress."}, status = status.HTTP_200_OK)
 				else:

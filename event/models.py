@@ -19,6 +19,7 @@ class Event(models.Model):
 	organized_by = models.ForeignKey("user.User", on_delete = models.PROTECT, max_length = 128, null = False, blank = False)
 	is_active = models.BooleanField(default=True)
 	payment_config =  models.ForeignKey(PaymentConfig, on_delete=models.PROTECT, default = 1)
+	payment_product_id = models.CharField(max_length=256, blank=True, null=True)
 	created_at = models.DateTimeField(auto_now_add=True, editable=False, null=False, blank=False)
 	updated_at = models.DateTimeField(auto_now=True, null=False, blank=False)
 	

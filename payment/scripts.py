@@ -26,7 +26,7 @@ def checkout_payment(user_event):
 			customer_email=user_event.user.email,
 			line_items=[
 				{
-				'price': "price_1NNsMlDmUdGLyEvchQP4qWri",
+				'price': user_event.event.payment_product_id,
 				'quantity': no_of_tickets,
 				},
 			],
