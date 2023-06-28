@@ -5,6 +5,7 @@ coreapi==2.3.3
 coreschema==0.0.4
 Django==4.2.2
 django-ckeditor==6.5.1
+django-cors-headers==4.1.0
 django-environ==0.4.5
 django-js-asset==2.0.0
 django-storages==1.9.1
@@ -27,5 +28,6 @@ ruamel.yaml==0.17.31
 ruamel.yaml.clib==0.2.7
 six==1.15.0
 sqlparse==0.4.4
+stripe==5.4.0
 uritemplate==3.0.1
 urllib3==1.25.11
