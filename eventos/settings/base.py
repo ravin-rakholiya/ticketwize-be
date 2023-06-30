@@ -16,7 +16,9 @@ import os
 # BASE_DIR = Path(__file__).resolve().parent.parent
 import environ
 import configparser
-
+import django
+from django.utils.encoding import force_str
+django.utils.encoding.force_text = force_str
 
 # Build paths inside the project like this: os.path.join(ROOT_DIR, ...)
 ROOT_DIR = environ.Path(__file__) - 3
@@ -62,6 +64,7 @@ THIRD_PARTY_APPS = (
     'rest_framework',
     'ckeditor',
     'corsheaders',
+    'storages'
     # 'rest_framework.authtoken',
     # 'django.contrib.sites',
     # 'drf_yasg',
@@ -185,28 +188,49 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
+# # SNS
 
+# AWS_SNS_ACCESS_KEY_ID = env("AWS_SNS_ACCESS_KEY_ID")
+# AWS_SNS_SECRET_ACCESS_KEY = env("AWS_SNS_SECRET_ACCESS_KEY")
 
+# AWS S3 Settings
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
+AWS_DEFAULT_ACL = 'public-read'
+AWS_BUCKET_ACL = 'public-read'
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+# AWS_S3_CUSTOM_DOMAIN = env('AWS_S3_CUSTOM_DOMAIN')
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
-# STATIC_URL = 'static/'
+AWS_LOCATION = 'static'
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+
+SERVE_FILE_BACKEND = 'filetransfers.backends.url.serve_file'
+
+STATICFILES_DIRS = (
+    str(APPS_DIR.path('static')),
+)
+
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = 'config.storage_backends.MediaStorage'
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATICFILES_DIRS = (str(APPS_DIR.path('static')),
-    # ('custom_emails', str(ROOT_DIR.path('templates/assets'))),
+# STATICFILES_DIRS = (str(APPS_DIR.path('static')),
+#     # ('custom_emails', str(ROOT_DIR.path('templates/assets'))),
 
-)
-STATIC_URL = '/static/'
-MEDIA_ROOT  = str(ROOT_DIR.path('media'))
-MEDIA_URL = '/media/'
+# )
+# STATIC_URL = '/static/'
+# MEDIA_ROOT  = str(ROOT_DIR.path('media'))
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = str(ROOT_DIR.path('media'))
+# MEDIA_URL = '/media/'
 
 STRIPE_SECRET_KEY=env('STRIPE_SECRET_KEY')
 SITE_URL = env('SITE_URL')
