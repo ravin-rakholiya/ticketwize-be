@@ -3,7 +3,7 @@ from event.models import Event
 # Create your models here.
 def content_upload_path(instance, filename):
     return 'content/{0}/{1}/{2}'.format(
-        instance.uploader.id,
+        instance.event.title,
         instance.type_of_content,
         filename
         )
