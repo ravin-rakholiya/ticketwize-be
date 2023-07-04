@@ -58,6 +58,7 @@ class RegisterEventAPIView(APIView):
 					user_event = UserEvent.objects.create(user = user, event = event, no_of_tickets = int(no_of_tickets))
 					# write a code for payment gateway after creating user event and before adding booked seat
 					checkout_session = checkout_payment(user_event)
+					print(f"61------", checkout_session)
 					return redirect(checkout_session.url, code=303)
 				else:
 					return Response({"response":"reuqired seats are not available."},  status=status.HTTP_400_BAD_REQUEST)
