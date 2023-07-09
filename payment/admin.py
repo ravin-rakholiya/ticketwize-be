@@ -4,8 +4,8 @@ from payment.models import *
 # Register your models here.
 class PaymentConfigAdmin(admin.ModelAdmin):
     """ Registering the Event to Django Admin Panel """
-    fields = ['service_fee', 'payment_fee']
-    list_display = ('id','service_fee', 'payment_fee', 'created_at', 'updated_at')
+    fields = ['service_fee', 'payment_fee', 'flat_fee']
+    list_display = ('id','service_fee', 'payment_fee', 'flat_fee','created_at', 'updated_at')
     list_per_page = 25
 
 admin.site.register(PaymentConfig, PaymentConfigAdmin)

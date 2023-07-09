@@ -5,7 +5,7 @@ from django.conf import settings
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
-def checkout_payment(user_event):
+def checkout_payment(user_event, email):
 	payment_method_type = "card",
 	mode = "payment"
 	currency = "cad"
@@ -15,8 +15,8 @@ def checkout_payment(user_event):
 	service_fees = user_event.event.payment_config.service_fee
 	payment_charge = user_event.event.payment_config.payment_fee
 	total_fees = ((no_of_tickets*(event_fees) + (no_of_tickets*((event_fees*(service_fees+payment_charge))/100))))*100
-	success_url = settings.SITE_URL+"/components/blocks/Payment/PaymentSuccess/?success=true&session_id={CHECKOUT_SESSION_ID}"
-	cancle_url = settings.SITE_URL+"/components/blocks/Payment/PaymentCancle/?canceled=true"
+	success_url = settings.SITE_URL+"/components/blocks/Payment/PaymentSuccess/?success=true&session_id={CHECKOUT_SESSION_ID}"+"&email="+email
+	cancle_url = settings.SITE_URL+"/components/blocks/Payment/PaymentCancle/?canceled=true"+"&email="+email
 	transaction_details = {"user_event_id":user_event.id,"payment_method_type":payment_method_type, "no_of_tickets":no_of_tickets, "mode": mode, "currency":currency, "product_data":product_data, "unit_amount":total_fees}
 	payment = Payment.objects.create(user_event = user_event, transaction_details = transaction_details)
 	try:
