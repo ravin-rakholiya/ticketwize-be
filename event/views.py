@@ -54,7 +54,7 @@ class RegisterEventAPIView(APIView):
 			if event:
 				print(f"54-------")
 				user = User.objects.filter(email = email)
-				print(f"55-------")
+				print(f"55-------", user)
 				if user:
 					print(f"56-------")
 					user = user.last()
