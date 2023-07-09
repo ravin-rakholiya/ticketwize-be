@@ -29,6 +29,7 @@ class RegisterEventAPIView(APIView):
 	serializer_classes = []
 
 	def post(self, request):
+		print(request.data)
 		event_id = request.data.get('event_id', None)
 		no_of_tickets = request.data.get('no_of_tickets', None)
 		first_name = request.data.get('first_name', None)
