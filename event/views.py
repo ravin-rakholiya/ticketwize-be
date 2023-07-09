@@ -108,7 +108,7 @@ class EventRegistrationSuccessfulAPIView(APIView):
 		if user_event:
 			user_event = user_event.last()
 		email_content = {"full_name": user.first_name if user.first_name else None+" "+user.last_name if user.last_name else None, "no_of_tickets": no_of_tickets,
-						"event_title": event.title, "event_date": {event.end_date_time},
+						"event_title": event.title,
 						"event_venue":f"{event_address.house_no}, {event_address.street}, {event_address.city}, {event_address.provision}, {event_address.country}, {event_address.postal_code}",
 						"ticket_link":f"{site_url}/components/blocks/ticket/eventTicket?event_id={event_id}&email={email}&user_event_id={user_event.user_event_id}"}
 		if(user_event.success_mail == False):
