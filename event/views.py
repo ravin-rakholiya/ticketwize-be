@@ -48,14 +48,23 @@ class RegisterEventAPIView(APIView):
 			print(e)
 		print(f"49--------------")
 		if event_id is not None:
+			print(f"51-------")
 			event = Event.objects.filter(event_id = event_id, is_active = True)
+			print(f"53-------")
 			if event:
+				print(f"54-------")
 				user = User.objects.filter(email = email)
+				print(f"55-------")
 				if user:
+					print(f"56-------")
 					user = user.last()
+					print(f"57-------")
 				else:
+					print(f"58-------")
 					user = User.objects.filter(contact_number = contact_number)
+					print(f"59-------")
 					if user:
+						print(f"60-------")
 						user = user.last()
 				if user is None:
 					print(f"61-------")
