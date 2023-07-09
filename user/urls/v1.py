@@ -4,5 +4,5 @@ from user import views
 
 
 urlpatterns = [
-    # path('', views.FetchEvents.as_view(), name='fetch-event-data'),
+    path('fetch/tickets', views.FetchEventsTicketsAPIView.as_view(), name='fetch-event-tickets'),
 ]

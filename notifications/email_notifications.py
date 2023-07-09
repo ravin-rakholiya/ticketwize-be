@@ -4,6 +4,7 @@ from django.template import Context
 # from notification.consts import EMAIL_MESSAGES
 from django.template.loader import get_template
 
+from_email = settings.EMAIL_HOST_USER
 
 def send_mail_with_template(mail_content, txt_template_path, html_template_path, subject, from_email, to_emails):
     mail_content = mail_content
@@ -28,7 +29,7 @@ def send_login_otp(otp, to_emails, from_email='ravinkumarrakh@gmail.com'):
     subject = "TicketWize: OTP for Sign In"
     mail_content = {'otp': otp}
     txt_template_path = "templates/custom_emails/otp/login_otp.txt"
-    html_template_path = "custom_emails/otp/login_otp.html"
+    html_template_path = "login_otp.html"
     send_mail_with_template(mail_content, txt_template_path, html_template_path, subject, from_email, to_emails)
 
 
@@ -61,3 +62,11 @@ def send_report_user_notification(mail_content, subject, from_email='ravinkumarr
     subject = "User Reported"
     mail_content = mail_content
     send_mail_without_template(mail_content, subject, from_email, to_emails)
+
+def send_ticket_verification_mail(mail_content, to_emails, from_email):
+    subject = "TicketWize | Event Registraction Successful | Tickets"
+    # mail_content={"full_name":"Ravin Rakholiya", "no_of_tickets":"5", "event_title": "Garaba Night", "event_date":"9th July, 2023", "event_venue":"256, oak St, windsor, Ontario", "ticket_link":"http://www.google.com"}
+    txt_template_path = 'templates/custom_emails/ticket.txt'
+    html_template_path = 'custom_emails/event_ticket.html'
+    send_mail_with_template(mail_content, txt_template_path, html_template_path, subject, from_email, to_emails)
+

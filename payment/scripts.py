@@ -2,9 +2,15 @@ from user.models import *
 from payment.models import *
 import stripe
 from django.conf import settings
+import qrcode
+import qrcode.image.svg
+from content.models import EventTicketContent
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
+site_url = settings.SITE_URL
 
+ROOT_DIR = settings.ROOT_DIR
+print(f"13---{ROOT_DIR}/qr.svg")
 def checkout_payment(user_event, email):
 	payment_method_type = "card",
 	mode = "payment"
@@ -49,3 +55,40 @@ def checkout_payment(user_event, email):
 		return checkout_session
 	except Exception as e:
 		return str(e)
+
+import boto3
+
+s3_client = boto3.client('s3')
+
+def upload_file_to_s3(qr_svg):
+	s3_client.upload_file(
+	    Filename=f"{ROOT_DIR}/qr.svg",
+	    Bucket=settings.AWS_STORAGE_BUCKET_NAME,
+	    Key='media/content/1/image/qr.svg'
+	)
+
+# from bytesIO import bytesIO
+
+def get_qrcode_svg(uri):
+    stream = bytesIO()
+    img = qrcode.make( uri, image_factory=qrcode.image.svg.SvgImage)
+    img.save(stream)
+    return stream.getvalue().decode()
+
+def generate_event_ticket_qr_code(event_id, email):
+	user_events = UserEvent.objects.filter(user__email = email, event__event_id = event_id)
+	for user_event in user_events:
+		payments = Payment.objects.filter(user_event = user_event , status = True)
+		for payment in payments:
+			# qr_svg = qrcode.make(f"{site_url}/ticket/?event_id={event_id}?email={email}", image_factory=qrcode.image.svg.SvgImage)
+			qr_svg = get_qrcode_svg(f"{site_url}/ticket/?event_id={event_id}&email={email}&user_event_id&{user_event}")
+
+			# with open('qr.svg', 'wb') as qr:
+			# 	print(f"77----{type(qr_svg)}")
+				# upload_file_to_s3(qr)
+
+
+
+
+
+

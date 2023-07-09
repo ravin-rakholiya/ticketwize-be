@@ -1,5 +1,6 @@
 from django.db import models
 from jsonfield import JSONField
+import uuid
 
 # Create your models here.
 class PaymentConfig(models.Model):
@@ -20,6 +21,7 @@ class Payment(models.Model):
 	user_event = models.ForeignKey("user.UserEvent", related_name='payment_user_event',on_delete = models.PROTECT, null = False, blank = False)
 	transaction_details = JSONField(null=True, blank=True)
 	status =  models.BooleanField(default=False)
+	payment_id = models.UUIDField(default = uuid.uuid4, editable = False)
 	created_at = models.DateTimeField(auto_now_add=True, editable=False, null=False, blank=False)
 	updated_at = models.DateTimeField(auto_now=True, null=False, blank=False)
 

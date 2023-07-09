@@ -34,7 +34,7 @@ SECRET_KEY = env('SECRET_KEY')#'django-insecure-(27)_5x6p$zo%q+#5dg$tka16c1i8*03
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = env.bool('DEBUG', default=False)
+DEBUG = env.bool('DEBUG', default=True)
 # AUTH_USER_MODEL = 'user.User'
 # SITE_ID = env('SITE_ID')
 
@@ -104,7 +104,7 @@ CORS_ALLOWED_ORIGINS = ['http://localhost:8000',]
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [str(ROOT_DIR.path('templates'))],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -238,7 +238,7 @@ SITE_URL = env('SITE_URL')
 
 # Email Confiduration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = "email-smtp.us-east-2.amazonaws.com"
+EMAIL_HOST = "smtp.gmail.com"
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 EMAIL_PORT = 587

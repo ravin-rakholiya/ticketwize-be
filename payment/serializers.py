@@ -11,3 +11,9 @@ class PaymentConfigSerializer(serializers.ModelSerializer):
 
 	def get_total_additional_charges(self, obj):
 		return obj.service_fee + obj.payment_fee
+
+class PaymentSerializer(serializers.ModelSerializer):
+	
+	class Meta:
+		model = Payment
+		fields = ['user_event', 'transaction_details', 'status', 'payment_id']

@@ -8,6 +8,8 @@ from django.contrib.auth.models import (
 )
 from django.core.validators import ValidationError
 from event.models import Event
+import uuid
+	
 # Create your models here.
 class UserManager(BaseUserManager):
     def create_user(self, username, password):
@@ -125,6 +127,9 @@ class UserEvent(models.Model):
 	user = models.ForeignKey(User, null=False, blank=False, on_delete=models.PROTECT)
 	event = models.ForeignKey(Event, null=False, blank=False, on_delete=models.PROTECT)
 	no_of_tickets = models.IntegerField(blank=False, null=False, default = 0)
+	user_event_id = models.UUIDField(default = uuid.uuid4, editable = False)
+	success_mail = models.BooleanField(default = False)
+	failure_mail = models.BooleanField(default = False)
 	created_at = models.DateTimeField(auto_now_add=True, editable=False, null=False, blank=False)
 	updated_at = models.DateTimeField(auto_now=True, null=False, blank=False)
 	

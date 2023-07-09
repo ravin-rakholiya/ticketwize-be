@@ -105,7 +105,7 @@ admin.site.register(Address, AddressAdmin)
 class UserEventAdmin(admin.ModelAdmin):
     """ Registering the UserEvent to Django Admin Panel """
     fields = ['user', 'event', 'no_of_tickets']
-    list_display = ('id', 'user', 'event', 'no_of_tickets', 'created_at', 'updated_at',)
+    list_display = ('id', 'user', 'event', 'no_of_tickets', 'user_event_id', 'created_at', 'updated_at',)
     list_per_page = 25
 
 admin.site.register(UserEvent, UserEventAdmin)
