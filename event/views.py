@@ -30,13 +30,16 @@ class RegisterEventAPIView(APIView):
 
 	def post(self, request):
 		print(request.data)
-		event_id = request.data.get('event_id', None)
-		no_of_tickets = request.data.get('no_of_tickets', None)
-		first_name = request.data.get('first_name', None)
-		last_name = request.data.get('last_name', None)
-		email = request.data.get('email', None)
-		contact_number = request.data.get('contact_number', None)
-		gender = request.data.get('gender', None)
+		try:
+			event_id = request.data.get('event_id', None)
+			no_of_tickets = request.data.get('no_of_tickets', None)
+			first_name = request.data.get('first_name', None)
+			last_name = request.data.get('last_name', None)
+			email = request.data.get('email', None)
+			contact_number = request.data.get('contact_number', None)
+			gender = request.data.get('gender', None)
+		except Exception as e:
+			print(e)
 		print(f"40--------------")
 		if event_id is not None:
 			event = Event.objects.filter(event_id = event_id, is_active = True)
