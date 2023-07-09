@@ -44,10 +44,10 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser):
 	CHEAT_OTP = ['000000', '123456', '111111']
 	GENDER_CHOICES = (
-		("M", "Male"),
-		("F", "Female"),
-		("O", "Other"),
-		("N", "No Answer"),
+		("male", "Male"),
+		("female", "Female"),
+		("other", "Other"),
+		("Prefer not to answer", "No Answer"),
 	)
 
 	USER_TYPE = (
@@ -74,7 +74,7 @@ class User(AbstractBaseUser):
 	email = models.EmailField(blank=True, null=True, db_index=True, unique = True)
 	contact_number = models.CharField(validators=[validate_contact_number],max_length=16, blank=True, null=True, db_index=True)
 	dob = models.DateField(blank=True, null=True, )
-	gender = models.CharField(max_length=1,choices=GENDER_CHOICES, blank=True, null=True)
+	gender = models.CharField(max_length=20,choices=GENDER_CHOICES, blank=True, null=True)
 	is_active = models.BooleanField(default=True)
 	is_admin = models.BooleanField(default=False)
 	is_staff = models.BooleanField(default=False)
