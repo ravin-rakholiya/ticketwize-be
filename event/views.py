@@ -37,6 +37,7 @@ class RegisterEventAPIView(APIView):
 		email = request.data.get('email', None)
 		contact_number = request.data.get('contact_number', None)
 		gender = request.data.get('gender', None)
+		print(f"40--------------")
 		if event_id is not None:
 			event = Event.objects.filter(event_id = event_id, is_active = True)
 			if event:
@@ -49,12 +50,17 @@ class RegisterEventAPIView(APIView):
 						user = user.last()
 				if user is None:
 					user = User.objects.create(first_name = first_name, last_name = last_name, email = email, contact_number = contact_number, gender = gender)
+					print(f"53--------------")
 			else:
+				print(f"55----------------")
 				return Response({"response":"event is not present."},  status=status.HTTP_400_BAD_REQUEST)
 			if user and event:
+				print(f"58---------------------")
 				event = event.last()
+				print(f"60---------------------")
 				if int(event.total_seat) - int(event.booked_seat) >= int(no_of_tickets):
 					user_event = UserEvent.objects.create(user = user, event = event, no_of_tickets = int(no_of_tickets))
+					print(f"64--------------------")
 					# write a code for payment gateway after creating user event and before adding booked seat
 					checkout_session = checkout_payment(user_event, email)
 					return Response({"response":checkout_session.url},  status=status.HTTP_200_OK)

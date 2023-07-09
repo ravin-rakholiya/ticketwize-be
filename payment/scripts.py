@@ -20,7 +20,9 @@ def checkout_payment(user_event, email):
 	cancle_url = settings.SITE_URL+"/components/blocks/Payment/PaymentCancle/?canceled=true"+"&email="+email
 	transaction_details = {"user_event_id":user_event.id,"payment_method_type":payment_method_type, "no_of_tickets":no_of_tickets, "mode": mode, "currency":currency, "product_data":product_data, "unit_amount":total_fees}
 	payment = Payment.objects.create(user_event = user_event, transaction_details = transaction_details)
+	print(f"23------------------")
 	try:
+		print(f"25---------------------")
 		checkout_session = stripe.checkout.Session.create(
 			customer_email=user_event.user.email,
 			line_items=[
@@ -41,11 +43,13 @@ def checkout_payment(user_event, email):
 			success_url=success_url,
 			cancel_url=cancle_url,
 		)
+		print(f"46---------------")
 		event = user_event.event
 		event.booked_seat += int(no_of_tickets)
 		event.save()
 		payment.status = True
 		payment.save()
+		print(f"52-------")
 		return checkout_session
 	except Exception as e:
 		return str(e)
