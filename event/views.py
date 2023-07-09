@@ -60,7 +60,7 @@ class RegisterEventAPIView(APIView):
 					user = user.last()
 					print(f"57-------")
 
-				if user is None:
+				if user is None or len(user)==0:
 					print(f"61-------")
 					user = User.objects.create(first_name = first_name, last_name = last_name, email = email, contact_number = contact_number, gender = gender)
 					print(f"53--------------")
