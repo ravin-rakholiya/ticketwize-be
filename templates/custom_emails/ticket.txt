@@ -1,0 +1,9 @@
+Hi {username},
+
+Your {no of ticket} ticket registration for {event name} - {event date} is confirmed and your payment is also successful.
+
+You can find the QR code here.
+{qr_code}
+
+Thank You,
+Ticketwize Team.
