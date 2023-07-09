@@ -44,6 +44,7 @@ class RegisterEventAPIView(APIView):
 			contact_number = request.data.get('contact_number', None)
 			print(f"40---------", contact_number)
 			gender = request.data.get('gender', None)
+			print(f"47-----", gender)
 		except Exception as e:
 			print(e)
 		print(f"49--------------")

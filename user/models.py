@@ -47,6 +47,7 @@ class User(AbstractBaseUser):
 		("M", "Male"),
 		("F", "Female"),
 		("O", "Other"),
+		("N", "No Answer"),
 	)
 
 	USER_TYPE = (
