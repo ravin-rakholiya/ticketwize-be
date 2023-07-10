@@ -17,11 +17,20 @@ def checkout_payment(user_event, email):
 	currency = "cad"
 	product_data={"name":f"{user_event.user.first_name} {user_event.user.last_name}", "email" : user_event.user.email}
 	no_of_tickets = user_event.no_of_tickets
-	event_fees = user_event.event.price
-	service_fees = user_event.event.payment_config.service_fee
-	payment_charge = user_event.event.payment_config.payment_fee
+	event_fees = user_event.event.price * no_of_tickets
 	flat_fee = user_event.event.payment_config.flat_fee
-	total_fees = ((no_of_tickets*(event_fees + flat_fee) + (no_of_tickets*((event_fees*(service_fees+payment_charge))/100))))*100
+	service_fees_per = user_event.event.payment_config.service_fee 
+	service_fees = ((event_fees*service_fees_per)/100)+(flat_fee*no_of_tickets)
+
+	payment_charge_per = user_event.event.payment_config.payment_fee
+	payment_charge = ((service_fees + event_fees)*payment_charge_per)/100
+	# flat_fee = user_event.event.payment_config.flat_fee
+	# total_fees = ((no_of_tickets*(event_fees + flat_fee) + (no_of_tickets*((event_fees*(service_fees+payment_charge))/100))))*100
+	print(f"29------",type(event_fees))
+	print(f"30------",type(service_fees))
+	print(f"31------",type(payment_charge))
+	total_fees = (((event_fees)+(payment_charge)+(service_fees)))*100
+	print(f"33----", total_fees)
 	success_url = settings.SITE_URL+"/components/blocks/Payment/PaymentSuccess/?success=true&session_id={CHECKOUT_SESSION_ID}"+"&email="+email
 	cancle_url = settings.SITE_URL+"/components/blocks/Payment/PaymentCancle/?canceled=true"+"&email="+email
 	transaction_details = {"user_event_id":user_event.id,"payment_method_type":payment_method_type, "no_of_tickets":no_of_tickets, "mode": mode, "currency":currency, "product_data":product_data, "unit_amount":total_fees}
