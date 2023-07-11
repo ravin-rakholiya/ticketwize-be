@@ -10,7 +10,7 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 site_url = settings.SITE_URL
 
 ROOT_DIR = settings.ROOT_DIR
-print(f"13---{ROOT_DIR}/qr.svg")
+
 def checkout_payment(user_event, email):
 	payment_method_type = "card",
 	mode = "payment"
@@ -21,16 +21,9 @@ def checkout_payment(user_event, email):
 	flat_fee = user_event.event.payment_config.flat_fee
 	service_fees_per = user_event.event.payment_config.service_fee 
 	service_fees = ((event_fees*service_fees_per)/100)+(flat_fee*no_of_tickets)
-
 	payment_charge_per = user_event.event.payment_config.payment_fee
 	payment_charge = ((service_fees + event_fees)*payment_charge_per)/100
-	# flat_fee = user_event.event.payment_config.flat_fee
-	# total_fees = ((no_of_tickets*(event_fees + flat_fee) + (no_of_tickets*((event_fees*(service_fees+payment_charge))/100))))*100
-	print(f"29------",type(event_fees))
-	print(f"30------",type(service_fees))
-	print(f"31------",type(payment_charge))
 	total_fees = (((event_fees)+(payment_charge)+(service_fees)))*100
-	print(f"33----", total_fees)
 	success_url = settings.SITE_URL+"/components/blocks/Payment/PaymentSuccess/?success=true&session_id={CHECKOUT_SESSION_ID}"+"&email="+email
 	cancle_url = settings.SITE_URL+"/components/blocks/Payment/PaymentCancle/?canceled=true"+"&email="+email
 	transaction_details = {"user_event_id":user_event.id,"payment_method_type":payment_method_type, "no_of_tickets":no_of_tickets, "mode": mode, "currency":currency, "product_data":product_data, "unit_amount":total_fees}
@@ -40,7 +33,6 @@ def checkout_payment(user_event, email):
 			customer_email=user_event.user.email,
 			line_items=[
 				{
-				# 'price': user_event.event.payment_product_id,
 				'quantity': 1,
 				'price_data':{
 					'currency': 'cad',
@@ -61,6 +53,8 @@ def checkout_payment(user_event, email):
 		event.save()
 		payment.status = True
 		payment.save()
+		user_event.success_mail = False
+		user_event.save()
 		return checkout_session
 	except Exception as e:
 		return str(e)

@@ -42,8 +42,12 @@ class RegisterEventAPIView(APIView):
 			email = request.data.get('email', None)
 			contact_number = request.data.get('contact_number', None)
 			gender = request.data.get('gender', None)
+			accepted_terms = request.data.get('accepted_terms', False)
 		except Exception as e:
 			print(e)
+		if not accepted_terms:
+			Response({"response":"accept terms and conditions."},  status=status.HTTP_400_BAD_REQUEST)
+
 		if event_id is not None:
 			event = Event.objects.filter(event_id = event_id, is_active = True)
 			if event:
@@ -72,11 +76,8 @@ class EventRegistrationSuccessfulAPIView(APIView):
 	serializer_classes = []
 
 	def get(self, request):
-		print(f"75---------")
 		event_id = request.query_params['event_id']
 		email = request.query_params['email']
-		# user_event_id = request.query_params['user_event_id']
-		
 		try:
 			event = Event.objects.get(event_id = event_id)
 			if event:

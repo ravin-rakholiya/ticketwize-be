@@ -128,6 +128,7 @@ class UserEvent(models.Model):
 	event = models.ForeignKey(Event, null=False, blank=False, on_delete=models.PROTECT)
 	no_of_tickets = models.IntegerField(blank=False, null=False, default = 0)
 	user_event_id = models.UUIDField(default = uuid.uuid4, editable = False)
+	accepted_terms = models.BooleanField(default = False)
 	success_mail = models.BooleanField(default = False)
 	failure_mail = models.BooleanField(default = False)
 	created_at = models.DateTimeField(auto_now_add=True, editable=False, null=False, blank=False)
